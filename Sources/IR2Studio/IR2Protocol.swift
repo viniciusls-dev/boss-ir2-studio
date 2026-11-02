@@ -3,7 +3,7 @@ import Foundation
 enum PedalChannel: Int, CaseIterable, Identifiable, Codable {
     case green, red
     var id: Int { rawValue }
-    var title: String { self == .green ? "Verde" : "Vermelho" }
+    var title: String { self == .green ? L10n.tr("Verde") : L10n.tr("Vermelho") }
     var address: UInt32 { self == .green ? 0x21000000 : 0x22000000 }
 }
 
@@ -19,7 +19,7 @@ enum PedalParameter: Int, CaseIterable, Identifiable {
         case .level: "Level"
         case .gain: "Gain"
         case .ambience: "Ambience"
-        case .amp: "Amplificador"
+        case .amp: L10n.tr("Amplificador")
         }
     }
 }
@@ -87,16 +87,16 @@ enum IR2ProtocolError: LocalizedError {
     case invalidValue, invalidPatch, disconnected, notFound, ambiguousDevice, timeout, busy, unexpectedResponse, channelChanged, midi(Int32)
     var errorDescription: String? {
         switch self {
-        case .invalidValue: "Valor fora da faixa aceita pelo IR-2."
-        case .invalidPatch: "O pedal retornou parâmetros inesperados."
-        case .disconnected: "O IR-2 está desconectado."
-        case .notFound: "IR-2 não encontrado. Confira o cabo USB e o driver BOSS."
-        case .ambiguousDevice: "Mais de um IR-2 foi encontrado. Conecte apenas um pedal."
-        case .timeout: "O IR-2 não respondeu a tempo. Confira a conexão e tente novamente."
-        case .busy: "Outra operação está em andamento."
-        case .unexpectedResponse: "O valor relido do pedal não corresponde à alteração enviada. Atualize a leitura antes de tentar novamente."
-        case .channelChanged: "O canal mudou durante a operação. Atualize a leitura antes de continuar a edição."
-        case .midi(let status): "Falha na comunicação MIDI (\(status))."
+        case .invalidValue: L10n.tr("Valor fora da faixa aceita pelo IR-2.")
+        case .invalidPatch: L10n.tr("O pedal retornou parâmetros inesperados.")
+        case .disconnected: L10n.tr("O IR-2 está desconectado.")
+        case .notFound: L10n.tr("IR-2 não encontrado. Confira o cabo USB e o driver BOSS.")
+        case .ambiguousDevice: L10n.tr("Mais de um IR-2 foi encontrado. Conecte apenas um pedal.")
+        case .timeout: L10n.tr("O IR-2 não respondeu a tempo. Confira a conexão e tente novamente.")
+        case .busy: L10n.tr("Outra operação está em andamento.")
+        case .unexpectedResponse: L10n.tr("O valor relido do pedal não corresponde à alteração enviada. Atualize a leitura antes de tentar novamente.")
+        case .channelChanged: L10n.tr("O canal mudou durante a operação. Atualize a leitura antes de continuar a edição.")
+        case .midi(let status): L10n.format("Falha na comunicação MIDI (%@).", String(status))
         }
     }
 }

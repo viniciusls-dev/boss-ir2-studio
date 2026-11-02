@@ -28,14 +28,14 @@ final class PedalStore: ObservableObject {
 
     var canEdit: Bool { connected && editingEnabled && !stale }
     var status: String {
-        if !connected { return busy ? "Conectando…" : "Desconectado" }
-        if stale { return "Leitura desatualizada" }
-        return pending.isEmpty && pendingSelection == nil ? "Conectado por USB" : "Confirmando alteração…"
+        if !connected { return busy ? L10n.tr("Conectando…") : L10n.tr("Desconectado") }
+        if stale { return L10n.tr("Leitura desatualizada") }
+        return pending.isEmpty && pendingSelection == nil ? L10n.tr("Conectado por USB") : L10n.tr("Confirmando alteração…")
     }
 
     init(session: IR2Session) {
         self.session = session
-        session.onDisconnect = { [weak self] in self?.disconnect(message: "O IR-2 foi desconectado. Reconecte o cabo e clique em Conectar.") }
+        session.onDisconnect = { [weak self] in self?.disconnect(message: L10n.tr("O IR-2 foi desconectado. Reconecte o cabo e clique em Conectar.")) }
         session.onParameterUpdate = { [weak self] update in
             guard let self, self.connected else { return }
             guard update.address == 0 || (0x20000000...0x22000006).contains(update.address) else { return }

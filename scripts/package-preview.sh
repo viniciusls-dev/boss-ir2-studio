@@ -32,6 +32,7 @@ mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 cp "$bin_dir/IR2Studio" "$app/Contents/MacOS/IR2Studio"
 cp Resources/Info.plist "$app/Contents/Info.plist"
 cp Resources/AppIcon.icns "$app/Contents/Resources/AppIcon.icns"
+ditto "$bin_dir/IR2Studio_IR2Studio.bundle" "$app/Contents/Resources/IR2Studio_IR2Studio.bundle"
 cp docs/INSTALL.txt "$payload/READ ME FIRST.txt"
 
 [[ "$(lipo -archs "$app/Contents/MacOS/IR2Studio")" == "arm64" ]]

@@ -5,6 +5,7 @@ struct IR2Backup: Equatable {
     enum Channel: String {
         case green = "Verde"
         case red = "Vermelho"
+        var title: String { L10n.tr(rawValue) }
     }
 
     let selectedChannel: Channel
@@ -64,10 +65,10 @@ struct IR2Backup: Equatable {
 
         var errorDescription: String? {
             switch self {
-            case .invalidStructure: "O arquivo não contém uma estrutura de backup IR-2 reconhecida."
-            case .unsupportedDevice: "Este backup não pertence a um BOSS IR-2."
-            case .unsupportedRevision: "A revisão deste backup ainda não é compatível com o leitor."
-            case .invalidField(let field): "O campo \(field) está ausente ou contém valores inesperados."
+            case .invalidStructure: L10n.tr("O arquivo não contém uma estrutura de backup IR-2 reconhecida.")
+            case .unsupportedDevice: L10n.tr("Este backup não pertence a um BOSS IR-2.")
+            case .unsupportedRevision: L10n.tr("A revisão deste backup ainda não é compatível com o leitor.")
+            case .invalidField(let field): L10n.format("O campo %@ está ausente ou contém valores inesperados.", field)
             }
         }
     }

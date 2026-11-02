@@ -5,9 +5,9 @@ enum StudioAppearance: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .system: "Sistema"
-        case .light: "Claro"
-        case .dark: "Escuro"
+        case .system: L10n.tr("Sistema")
+        case .light: L10n.tr("Claro")
+        case .dark: L10n.tr("Escuro")
         }
     }
     var colorScheme: ColorScheme? {
@@ -98,7 +98,7 @@ struct StudioKnob: View {
                 if dragStart == nil { dragStart = value }
                 value = min(maximum, max(0, ((dragStart ?? value) - drag.translation.height * 0.65 + drag.translation.width * 0.35).rounded()))
             }.onEnded { _ in dragStart = nil })
-            .help("Arraste para ajustar \(title)")
+            .help(L10n.format("Arraste para ajustar %@", title))
             .accessibilityHidden(true)
             Text("\(Int(value))").font(.custom("AvenirNext-DemiBold", size: 20)).monospacedDigit()
                 .foregroundStyle(palette.text)

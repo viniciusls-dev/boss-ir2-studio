@@ -13,7 +13,7 @@ enum AmpType: String, CaseIterable, Codable, Identifiable {
         if value == "ACOUSTIC" { self = .clean }
         else if value == "TWD" { self = .tweed }
         else if let amp = Self(rawValue: value) { self = amp }
-        else { throw DecodingError.dataCorruptedError(in: container, debugDescription: "Amplificador desconhecido") }
+        else { throw DecodingError.dataCorruptedError(in: container, debugDescription: L10n.tr("Amplificador desconhecido")) }
     }
 }
 

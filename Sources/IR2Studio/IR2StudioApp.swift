@@ -13,6 +13,7 @@ struct IR2StudioApp: App {
             ContentView()
                 .environmentObject(store)
                 .environmentObject(pedal)
+                .environment(\.locale, L10n.locale)
                 .frame(minWidth: 1000, minHeight: 700)
                 .preferredColorScheme((StudioAppearance(rawValue: appearance) ?? .system).colorScheme)
         }

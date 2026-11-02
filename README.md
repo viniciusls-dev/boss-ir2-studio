@@ -4,7 +4,7 @@ A native Mac app for viewing and controlling your BOSS IR-2 over USB. Read both 
 
 Requires **macOS 26 or later**.
 
-> The app’s interface is currently in Portuguese. The instructions below include the labels you will see on screen.
+The interface supports **English and Brazilian Portuguese** and follows your Mac's preferred language by default, with English as the fallback. Use **Language (`Idioma`)** at the bottom of the sidebar to choose **System**, **English**, or **Português**, then quit and reopen the app. Reopening also applies the language to macOS menus and file dialogs. Your preset names, notes, and JSON data are kept as you wrote them. The instructions below include Portuguese labels where helpful.
 
 ## Build and run
 

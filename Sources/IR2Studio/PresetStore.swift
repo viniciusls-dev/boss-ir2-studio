@@ -27,13 +27,13 @@ final class PresetStore: ObservableObject {
     var selectedIndex: Int? { presets.firstIndex { $0.id == selectedID } }
 
     func addPreset() {
-        let preset = Preset(name: "Novo preset")
+        let preset = Preset(name: L10n.tr("Novo preset"))
         presets.append(preset)
         selectedID = preset.id
     }
 
     func capture(_ snapshot: PedalSnapshot) {
-        var preset = Preset(name: "Timbre do IR-2")
+        var preset = Preset(name: L10n.tr("Timbre do IR-2"))
         preset.channelA = AmpSettings(patch: snapshot.green)
         preset.channelB = AmpSettings(patch: snapshot.red)
         presets.append(preset)

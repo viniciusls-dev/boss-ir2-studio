@@ -7,6 +7,7 @@ struct ContentView: View {
     @Environment(\.colorScheme) private var scheme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AppStorage("studioAppearance") private var appearance = StudioAppearance.system.rawValue
+    @AppStorage(AppLanguage.preferenceKey) private var language = AppLanguage.system.rawValue
     @State private var showExporter = false
     @State private var exportDocument = JSONDocument(data: Data())
     @State private var showBackupImporter = false
@@ -61,14 +62,14 @@ struct ContentView: View {
         .sheet(isPresented: $showBackup) {
             if let loadedBackup { BackupView(backup: loadedBackup) }
         }
-        .alert("Não foi possível abrir o arquivo", isPresented: $showImportError) {
+        .alert(L10n.tr("Não foi possível abrir o arquivo"), isPresented: $showImportError) {
             Button("OK", role: .cancel) { }
         } message: { Text(importError) }
-        .alert("Não foi possível concluir a operação", isPresented: $showExportError) {
+        .alert(L10n.tr("Não foi possível concluir a operação"), isPresented: $showExportError) {
             Button("OK", role: .cancel) { }
         } message: { Text(exportError) }
-        .confirmationDialog("Excluir este preset local?", isPresented: $showDeleteConfirmation, titleVisibility: .visible) {
-            Button("Excluir preset", role: .destructive, action: store.deleteSelected)
+        .confirmationDialog(L10n.tr("Excluir este preset local?"), isPresented: $showDeleteConfirmation, titleVisibility: .visible) {
+            Button(L10n.tr("Excluir preset"), role: .destructive, action: store.deleteSelected)
         }
         .fileExporter(isPresented: $showExporter, document: exportDocument,
                       contentType: .json, defaultFilename: "ir2-preset") { result in
@@ -85,7 +86,7 @@ struct ContentView: View {
                 Image(systemName: "waveform.path").font(.system(size: 27, weight: .medium)).foregroundStyle(palette.accent)
                 VStack(alignment: .leading, spacing: 5) {
                     Text("IR-2 Studio").font(.custom("AvenirNext-DemiBold", size: 21))
-                    Text("SEU SOM, EM FOCO").font(.system(size: 8, weight: .medium, design: .monospaced))
+                    Text(L10n.tr("SEU SOM, EM FOCO")).font(.system(size: 8, weight: .medium, design: .monospaced))
                         .tracking(2).foregroundStyle(palette.secondary)
                 }
             }
@@ -94,8 +95,8 @@ struct ContentView: View {
                 HStack(spacing: 10) {
                     Image(systemName: "cable.connector").foregroundStyle(palette.accent)
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("Meu IR-2").font(.custom("AvenirNext-DemiBold", size: 13))
-                        Text(pedal.connected ? "Conectado por USB" : "Conexão USB")
+                        Text(L10n.tr("Meu IR-2")).font(.custom("AvenirNext-DemiBold", size: 13))
+                        Text(pedal.connected ? L10n.tr("Conectado por USB") : L10n.tr("Conexão USB"))
                             .font(.custom("AvenirNext-Regular", size: 10)).foregroundStyle(palette.secondary)
                     }
                     Spacer()
@@ -108,7 +109,7 @@ struct ContentView: View {
             .buttonStyle(.plain).padding(.bottom, 24)
             .accessibilityAddTraits(showingPedal ? .isSelected : [])
             HStack {
-                StudioCaption(title: "PRESETS LOCAIS")
+                StudioCaption(title: L10n.tr("PRESETS LOCAIS"))
                 Spacer()
                 Text(String(format: "%02d", store.presets.count)).monospacedDigit()
             }
@@ -123,20 +124,20 @@ struct ContentView: View {
             .scrollIndicators(.hidden)
             .frame(maxHeight: .infinity)
             Button { store.addPreset(); showingPedal = false } label: {
-                Label("Novo preset", systemImage: "plus").frame(maxWidth: .infinity, alignment: .leading)
+                Label(L10n.tr("Novo preset"), systemImage: "plus").frame(maxWidth: .infinity, alignment: .leading)
             }
             .buttonStyle(StudioButtonStyle()).padding(.top, 12)
             Button { showPresetImporter = true } label: {
-                Label("Importar preset JSON…", systemImage: "square.and.arrow.down")
+                Label(L10n.tr("Importar preset JSON…"), systemImage: "square.and.arrow.down")
                     .font(.custom("AvenirNext-Regular", size: 11)).foregroundStyle(palette.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading).padding(.top, 10)
             }.buttonStyle(.plain)
             Rectangle().fill(palette.border).frame(height: 1).padding(.vertical, 22)
-            StudioCaption(title: "BACKUP DO PEDAL").foregroundStyle(palette.secondary).padding(.bottom, 12)
+            StudioCaption(title: L10n.tr("BACKUP DO PEDAL")).foregroundStyle(palette.secondary).padding(.bottom, 12)
             Button { showBackupImporter = true } label: {
                 HStack(spacing: 9) {
                     Image(systemName: "square.and.arrow.down").foregroundStyle(palette.accent)
-                    Text("Abrir backup .alb…")
+                    Text(L10n.tr("Abrir backup .alb…"))
                     Spacer()
                 }
             }
@@ -152,14 +153,29 @@ struct ContentView: View {
                     .font(.custom("AvenirNext-Regular", size: 11)).foregroundStyle(palette.secondary)
                     .padding(.vertical, 12)
                 }
-                .buttonStyle(.plain).help("Ver backup: \(loadedBackup.name)")
+                .buttonStyle(.plain).help(L10n.format("Ver backup: %@", loadedBackup.name))
             }
             Rectangle().fill(palette.border).frame(height: 1).padding(.vertical, 22)
-            StudioCaption(title: "APARÊNCIA").foregroundStyle(palette.secondary).padding(.bottom, 12)
-            Picker("Aparência", selection: $appearance) {
+            StudioCaption(title: L10n.tr("APARÊNCIA")).foregroundStyle(palette.secondary).padding(.bottom, 12)
+            Picker(L10n.tr("Aparência"), selection: $appearance) {
                 ForEach(StudioAppearance.allCases) { mode in Text(mode.title).tag(mode.rawValue) }
             }
-            .pickerStyle(.segmented).labelsHidden().padding(.bottom, 24)
+            .pickerStyle(.segmented).labelsHidden().padding(.bottom, 12)
+            Picker(L10n.tr("Idioma"), selection: $language) {
+                ForEach(AppLanguage.allCases) { language in
+                    Text(language.title).tag(language.rawValue)
+                }
+            }
+            .pickerStyle(.menu)
+            .onChange(of: language) { _, value in
+                (AppLanguage(rawValue: value) ?? .system).save()
+            }
+            if language != L10n.launchPreference.rawValue {
+                Text(L10n.tr("Reabra o app para aplicar o idioma."))
+                    .font(.custom("AvenirNext-Regular", size: 10))
+                    .foregroundStyle(palette.secondary)
+            }
+            Spacer().frame(height: 16)
         }
         .padding(.horizontal, 20)
         .background(palette.sidebar)
@@ -199,12 +215,12 @@ struct ContentView: View {
         let settings = store.selectedChannel == 0 ? preset.channelA : preset.channelB
         VStack(spacing: 0) {
             HStack {
-                Label("Biblioteca de timbres", systemImage: "square.stack.3d.up")
+                Label(L10n.tr("Biblioteca de timbres"), systemImage: "square.stack.3d.up")
                     .font(.custom("AvenirNext-Medium", size: 12)).foregroundStyle(palette.secondary)
                 Spacer()
                 HStack(spacing: 6) {
                     Circle().fill(palette.secondary).frame(width: 6, height: 6)
-                    Text("Editor local").font(.system(size: 10, weight: .medium, design: .monospaced))
+                    Text(L10n.tr("Editor local")).font(.system(size: 10, weight: .medium, design: .monospaced))
                 }
                 .foregroundStyle(palette.secondary).padding(.horizontal, 10).padding(.vertical, 7)
                 .background(palette.raised, in: Capsule())
@@ -215,14 +231,14 @@ struct ContentView: View {
                 VStack(alignment: .leading, spacing: 26) {
                     HStack(alignment: .center, spacing: 12) {
                         VStack(alignment: .leading, spacing: 7) {
-                            StudioCaption(title: "SEU PRÓXIMO TIMBRE").foregroundStyle(palette.accent)
-                            TextField("Nome do preset", text: preset.name)
+                            StudioCaption(title: L10n.tr("SEU PRÓXIMO TIMBRE")).foregroundStyle(palette.accent)
+                            TextField(L10n.tr("Nome do preset"), text: preset.name)
                                 .font(.custom("AvenirNext-DemiBold", size: 29)).textFieldStyle(.plain)
-                                .accessibilityLabel("Nome do preset")
+                                .accessibilityLabel(L10n.tr("Nome do preset"))
                         }
                         Spacer(minLength: 0)
                         Button(action: exportPreset) {
-                            Label("Exportar", systemImage: "square.and.arrow.up")
+                            Label(L10n.tr("Exportar"), systemImage: "square.and.arrow.up")
                         }
                         .buttonStyle(StudioButtonStyle())
                         Button {
@@ -233,28 +249,28 @@ struct ContentView: View {
                         }
                         .buttonStyle(StudioButtonStyle(prominent: true))
                         .disabled(!pedal.canEdit || pedal.busy || !pedal.pending.isEmpty)
-                        .help("Aplicar os dois canais deste preset ao pedal")
-                        .accessibilityLabel("Aplicar preset ao pedal")
+                        .help(L10n.tr("Aplicar os dois canais deste preset ao pedal"))
+                        .accessibilityLabel(L10n.tr("Aplicar preset ao pedal"))
                         Menu {
-                            Button("Excluir preset…", role: .destructive) { showDeleteConfirmation = true }
+                            Button(L10n.tr("Excluir preset…"), role: .destructive) { showDeleteConfirmation = true }
                         } label: {
                             Image(systemName: "ellipsis").frame(width: 18, height: 20)
                         }
-                        .menuStyle(.borderlessButton).fixedSize().help("Opções do preset")
+                        .menuStyle(.borderlessButton).fixedSize().help(L10n.tr("Opções do preset"))
                     }
                     VStack(alignment: .leading, spacing: 12) {
-                        StudioCaption(title: "CANAIS").foregroundStyle(palette.secondary)
+                        StudioCaption(title: L10n.tr("CANAIS")).foregroundStyle(palette.secondary)
                         HStack(spacing: 12) {
-                            channelCard(0, name: "Verde", amp: preset.wrappedValue.channelA.amp.rawValue, color: palette.green)
-                            channelCard(1, name: "Vermelho", amp: preset.wrappedValue.channelB.amp.rawValue, color: palette.red)
+                            channelCard(0, name: L10n.tr("Verde"), amp: preset.wrappedValue.channelA.amp.rawValue, color: palette.green)
+                            channelCard(1, name: L10n.tr("Vermelho"), amp: preset.wrappedValue.channelB.amp.rawValue, color: palette.red)
                         }
                     }
                     amplifierPanel(settings: settings)
                     VStack(alignment: .leading, spacing: 14) {
                         HStack {
-                            StudioCaption(title: "CONTROLES").foregroundStyle(palette.secondary)
+                            StudioCaption(title: L10n.tr("CONTROLES")).foregroundStyle(palette.secondary)
                             Spacer()
-                            Text("Preset local · 0–\(Int(settings.wrappedValue.maximum))").font(.system(size: 10, design: .monospaced)).foregroundStyle(palette.secondary)
+                            Text(L10n.format("Preset local · 0–%@", String(Int(settings.wrappedValue.maximum)))).font(.system(size: 10, design: .monospaced)).foregroundStyle(palette.secondary)
                         }
                         HStack(alignment: .top, spacing: 16) {
                             StudioKnob(title: "Gain", value: settings.gain, maximum: settings.wrappedValue.maximum)
@@ -268,9 +284,9 @@ struct ContentView: View {
                         .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(palette.border.opacity(0.8)))
                     }
                     VStack(alignment: .leading, spacing: 10) {
-                        StudioCaption(title: "NOTAS DO TIMBRE").foregroundStyle(palette.secondary)
-                        TextField("Guitarra, captador, referência de música…", text: preset.notes, axis: .vertical)
-                            .lineLimit(2...4).textFieldStyle(.plain).accessibilityLabel("Notas do timbre")
+                        StudioCaption(title: L10n.tr("NOTAS DO TIMBRE")).foregroundStyle(palette.secondary)
+                        TextField(L10n.tr("Guitarra, captador, referência de música…"), text: preset.notes, axis: .vertical)
+                            .lineLimit(2...4).textFieldStyle(.plain).accessibilityLabel(L10n.tr("Notas do timbre"))
                             .padding(15).background(palette.panel, in: RoundedRectangle(cornerRadius: 10))
                             .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(palette.border.opacity(0.7)))
                     }
@@ -300,7 +316,7 @@ struct ContentView: View {
             .padding(14).background(selected ? color.opacity(0.05) : palette.panel, in: RoundedRectangle(cornerRadius: 12))
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(selected ? color.opacity(0.55) : palette.border))
         }
-        .buttonStyle(.plain).accessibilityLabel("Canal \(name)")
+        .buttonStyle(.plain).accessibilityLabel(L10n.format("Canal %@", name))
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
@@ -311,17 +327,17 @@ struct ContentView: View {
                 Image(systemName: "hifispeaker.fill").font(.system(size: 28, weight: .light)).foregroundStyle(palette.accent)
             }
             VStack(alignment: .leading, spacing: 7) {
-                StudioCaption(title: "AMPLIFICADOR").foregroundStyle(palette.secondary)
+                StudioCaption(title: L10n.tr("AMPLIFICADOR")).foregroundStyle(palette.secondary)
                 Text(settings.wrappedValue.amp.rawValue)
                     .font(.custom("AvenirNext-DemiBold", size: 27)).tracking(1.5)
             }
             Spacer()
             Menu {
-                Picker("Amplificador", selection: settings.amp) {
+                Picker(L10n.tr("Amplificador"), selection: settings.amp) {
                     ForEach(AmpType.allCases) { amp in Text(amp.rawValue).tag(amp) }
                 }
             } label: {
-                HStack(spacing: 8) { Text("Trocar modelo"); Image(systemName: "chevron.up.chevron.down").font(.system(size: 9)) }
+                HStack(spacing: 8) { Text(L10n.tr("Trocar modelo")); Image(systemName: "chevron.up.chevron.down").font(.system(size: 9)) }
             }
             .menuStyle(.borderlessButton).fixedSize()
             .font(.custom("AvenirNext-Medium", size: 12)).foregroundStyle(palette.secondary)
@@ -334,7 +350,7 @@ struct ContentView: View {
     private var footer: some View {
         HStack(spacing: 8) {
             Image(systemName: "internaldrive").foregroundStyle(palette.accent)
-            Text("Presets salvos neste Mac").font(.custom("AvenirNext-Medium", size: 11))
+            Text(L10n.tr("Presets salvos neste Mac")).font(.custom("AvenirNext-Medium", size: 11))
             Spacer()
             Text(pedal.status).font(.custom("AvenirNext-Regular", size: 11)).foregroundStyle(palette.secondary)
         }
@@ -345,9 +361,9 @@ struct ContentView: View {
     private var emptyState: some View {
         VStack(spacing: 16) {
             Image(systemName: "waveform.path").font(.system(size: 38)).foregroundStyle(palette.accent)
-            Text("Um novo som começa aqui.").font(.custom("AvenirNext-DemiBold", size: 25))
-            Text("Crie um preset para explorar os dois canais.").foregroundStyle(palette.secondary)
-            Button("Criar preset", action: store.addPreset).buttonStyle(StudioButtonStyle(prominent: true))
+            Text(L10n.tr("Um novo som começa aqui.")).font(.custom("AvenirNext-DemiBold", size: 25))
+            Text(L10n.tr("Crie um preset para explorar os dois canais.")).foregroundStyle(palette.secondary)
+            Button(L10n.tr("Criar preset"), action: store.addPreset).buttonStyle(StudioButtonStyle(prominent: true))
         }
         .padding(30)
     }

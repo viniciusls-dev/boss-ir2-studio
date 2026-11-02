@@ -30,7 +30,9 @@ KNOW BEFORE YOU PLAY
 - Channel selection does not turn the effect on. Check the physical CHECK LED:
   green/red means the effect is on. An unlit LED can mean bypass.
 - Save as preset captures both channels; applying a preset sends both channels.
-- The app's interface is currently in Portuguese.
+- English and Brazilian Portuguese are supported. The app follows your Mac's language.
+  Choose Language (Idioma) in the sidebar to override it, then quit and reopen the app.
+  Preset names and notes are kept as written.
 
 This preview does not update firmware, load cabinet IRs, restore full backups,
 or read/control bypass. It is not an official BOSS or Roland product.
