@@ -28,7 +28,7 @@ You can also open `Package.swift` in Xcode or run `swift run`. To browse or edit
 
 ### Create download packages
 
-Run `./scripts/package-preview.sh` to build an optimized Apple Silicon app and produce a ZIP, DMG, and SHA-256 checksums in `dist/`. These are free preview packages with a local signature, **not Apple notarization**. They include [installation instructions](docs/INSTALL.txt). Generated downloads stay outside Git; they can be attached to a GitHub Release. The download names include the app version and preview build number. See the [preview release notes](docs/releases/v0.1.0-preview.2.md).
+Run `./scripts/package-preview.sh` to build an optimized Apple Silicon app and produce a ZIP, DMG, and SHA-256 checksums in `dist/`. These are free preview packages with a local signature, **not Apple notarization**. They include [installation instructions](docs/INSTALL.txt). Generated downloads stay outside Git; they can be attached to a GitHub Release. The download names include the app version and preview build number. See the [preview release notes](docs/releases/v0.1.0-preview.3.md).
 
 The packaging script replaces local source paths with `/IR2Studio`, removes debug records from the copied executable before signing, and checks the payload and extracted ZIP for local user or project paths. Intermediate build files remain in `work/` and are not distributed.
 
