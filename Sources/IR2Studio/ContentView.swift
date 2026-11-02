@@ -245,7 +245,8 @@ struct ContentView: View {
                             do { try pedal.apply(store.presets[index]) }
                             catch { exportError = error.localizedDescription; showExportError = true }
                         } label: {
-                            Image(systemName: "arrow.up.forward.app").frame(width: 14, height: 14)
+                            Label(L10n.tr("Aplicar ao pedal"), systemImage: "arrow.up.forward.app")
+                                .fixedSize()
                         }
                         .buttonStyle(StudioButtonStyle(prominent: true))
                         .disabled(!pedal.canEdit || pedal.busy || !pedal.pending.isEmpty)
