@@ -1,0 +1,25 @@
+{
+  "id": "42D9ECF4-640F-4B25-ADDE-900843949735",
+  "name": "Someday — Clean / Brit",
+  "notes": "Ponto de partida inspirado em Someday (Nickelback), para alternar entre partes limpas e refrão pesado. Não é um preset oficial nem uma reprodução exata da gravação; ajuste com sua guitarra e monitoração.\n\nVERDE / CLEAN: Coldshot desligado; arpejos com ataque leve. Se o clean começar a saturar, reduza o Gain e compense no Level.\n\nVERMELHO / BRIT: captador da ponte; Coldshot antes do INPUT do IR-2, ligado para empurrar o amp. Comece com o volume de monitoração baixo e equilibre o Level dos dois canais de ouvido.\n\nCOLDSHOT (assumindo Tone Ink com EQ de 3 bandas): Gain/Drive 9h; Bass 10h30; Mid no máximo; Treble 12h; Volume inicialmente em unidade, depois um pequeno boost (experimente 13h, ajustando de ouvido). Se houver chaves: Comp GLORY; Mid Cut MARSH (o corte praticamente não atua com Mid no máximo). Desligue o Coldshot no canal verde; a troca de canal do IR-2 não controla esse pedal externo.\n\nSe o refrão ficar magro, aumente um pouco o Gain do BRIT; se embolar, reduza Bass/Drive do Coldshot. Se ficar áspero, reduza Treble do IR-2. Valores na escala exata 0–127. Este preset altera somente amp e seis controles de cada canal; não instala IRs nem muda configurações globais.",
+  "channelA": {
+    "amp": "CLEAN",
+    "gain": 42,
+    "bass": 58,
+    "middle": 64,
+    "treble": 72,
+    "level": 90,
+    "ambience": 24,
+    "scale": "pedal127"
+  },
+  "channelB": {
+    "amp": "BRIT",
+    "gain": 78,
+    "bass": 56,
+    "middle": 76,
+    "treble": 66,
+    "level": 80,
+    "ambience": 14,
+    "scale": "pedal127"
+  }
+}

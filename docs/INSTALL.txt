@@ -1,0 +1,39 @@
+IR-2 Studio — macOS Preview
+
+REQUIREMENTS
+- A Mac with an Apple Silicon processor (M1 or later).
+- macOS 26 or later.
+- The BOSS IR-2 driver for macOS, for USB pedal control.
+  Official downloads: https://www.boss.info/global/support/by_product/ir-2/updates_drivers/
+
+INSTALL
+1. Open the DMG and drag IR2Studio to Applications.
+   If you downloaded the ZIP, extract it and move IR2Studio.app to Applications.
+2. Open IR2Studio from Applications.
+
+FIRST OPEN
+This free preview uses a local signature and has not been notarized by Apple.
+macOS may block its first launch. If you trust this download, follow Apple's
+instructions for allowing this specific app in System Settings > Privacy & Security:
+https://support.apple.com/en-us/102445
+
+CONNECT THE PEDAL
+1. Power the IR-2 normally and connect an instrument cable to INPUT.
+2. Use USB mode VENDOR, install the BOSS driver, and connect a USB data cable.
+3. Open Meu IR-2 (My IR-2). The app starts in read-only mode.
+4. Switch on Editar pedal (Edit pedal) to send changes.
+
+KNOW BEFORE YOU PLAY
+- Changes from the pedal are received in real time; there is no 3-second polling.
+- Atualizar (Refresh) reads both channels again when needed.
+- Green/Red cards inspect a channel. Selecionar (Select) changes the pedal's selection.
+- Channel selection does not turn the effect on. Check the physical CHECK LED:
+  green/red means the effect is on. An unlit LED can mean bypass.
+- Save as preset captures both channels; applying a preset sends both channels.
+- The app's interface is currently in Portuguese.
+
+This preview does not update firmware, load cabinet IRs, restore full backups,
+or read/control bypass. It is not an official BOSS or Roland product.
+
+Project, source code and full instructions:
+https://github.com/viniciusls-dev/boss-ir2-studio

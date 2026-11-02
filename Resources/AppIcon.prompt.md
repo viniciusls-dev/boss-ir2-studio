@@ -1,0 +1,7 @@
+# App icon generation
+
+Created with the built-in image generation tool. The original PNG is `AppIcon.png`; `scripts/build-icon.sh` creates the macOS `.icns` file from it using native macOS tools.
+
+## Prompt
+
+Create a finished premium macOS app icon for an independent guitar pedal controller called IR-2 Studio. Square 1024x1024 composition, transparent canvas outside a single generously rounded square charcoal-plum tile (approximately #25232D), tile centered occupying about 88 percent of canvas, with a subtle crisp edge and a restrained soft shadow. On the tile a bold simplified boutique guitar stompbox, made of satin anodized turquoise metal (#41D6C0), viewed nearly straight from above with only very slight dimensional extrusion. The stompbox is a vertical rounded rectangle with two large dark graphite rotary knobs across its top, a small green indicator and a small coral-red indicator below those knobs, a very simple short audio waveform engraved in the middle, and one large beautifully machined silver circular footswitch near the bottom. Clear strong silhouette and large deliberate forms readable in a small Dock icon. Sophisticated tactile native Mac icon, excellent clean craftsmanship, calm studio lighting, restrained highlights, elegant rather than cartoonish, visually balanced generous margins. No text, no letters, no brand logos, no BOSS branding, no guitar, no cable, no mockup scene, no multiple icons, no grid. Preserve real transparency around the rounded square tile.

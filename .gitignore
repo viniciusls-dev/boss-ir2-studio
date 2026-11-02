@@ -1,0 +1,31 @@
+.DS_Store
+.build/
+.swiftpm/
+work/
+dist/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# Local credentials, signing identities, and provisioning files.
+.env
+.env.*
+!.env.example
+!.env.template
+.aws/
+.ssh/
+.netrc
+*.key
+*.pem
+*.p8
+*.p12
+*.pfx
+*.cer
+*.keychain
+*.keychain-db
+*.mobileprovision
+*.provisionprofile
+
+# Personal pedal backups and copies of the local preset library.
+*.alb
+presets.json
